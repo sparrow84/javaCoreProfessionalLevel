@@ -26,20 +26,31 @@ public class lesson01 {
         for (String s: arrayList) {
             System.out.print(s + "  ");
         }
+        System.out.println("\n");
 
         /**
          * 3 task
          * */
 
-        Box<Apple> appleBox = new Box<Apple>(new Apple(), new Apple(), new Apple());
-//        Box
+        Box<Apple> appleBox = new Box<Apple>(new Apple(), new Apple(), new Apple(), new Apple());
+        Box<Orange> orangeBox = new Box<Orange>(new Orange(), new Orange(), new Orange());
+        Box<Orange> orangeBox01 = new Box<Orange>(new Orange(), new Orange(), new Orange());
 
         Apple apple01 = new Apple();
         Orange orange001 = new Orange();
 
         appleBox.put(apple01);
-//        appleBox.put(orange001);
+        orangeBox.put(orange001);
 
+        System.out.println("appleBox.getWeight " + appleBox.getWeight());
+        System.out.println("orangeBox.getWeight " + orangeBox.getWeight());
+        System.out.println("orangeBox01.getWeight " + orangeBox01.getWeight());
+
+        System.out.println("compare appleBox & orangeBox - " + appleBox.compare(orangeBox));
+
+        orangeBox.shift(orangeBox01);
+        System.out.println("orangeBox.getWeight " + orangeBox.getWeight());
+        System.out.println("orangeBox01.getWeight " + orangeBox01.getWeight());
     }
 
     public static <E> void swap(E[] e, int i, int j) {

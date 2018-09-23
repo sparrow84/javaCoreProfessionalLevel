@@ -1,7 +1,7 @@
 package com.company.lesson01;
 
 public class Fruit {
-    private Float weight;
+    private float weight;
 
 
     public Float getWeight() {
@@ -11,4 +11,6 @@ public class Fruit {
     public void setWeight(Float weight) {
         this.weight = weight;
     }
+
+
 }

@@ -21,12 +21,13 @@ public class ClientHandler {
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
 
+//            out.writeUTF("ClientHandler --- TEST 24");
 
             // Поток отслеживает таймаут для отключения при простое во время логина
             Thread t3 = new Thread(() -> {
                 try {
                     sleep(120000);
-                    sendMsg("Server: Connection timed out.");
+                    sendMsg("Server: Connection timed out_.");
                     System.out.println("ClientHandler.this.socket before -> " + ClientHandler.this.socket);
                     System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
                     ClientHandler.this.socket.close();
@@ -49,6 +50,8 @@ public class ClientHandler {
                     System.out.println("---debug--- ClientHandler Thread t1 START go try");
 
                     while (true) {
+
+                        sendMsg("Server: Check conection ___ 54");
 
                         System.out.println("---debug--- ClientHandler Thread t1 START go try go while");
 
@@ -139,3 +142,15 @@ public class ClientHandler {
         return nick;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

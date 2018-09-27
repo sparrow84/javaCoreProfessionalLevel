@@ -34,7 +34,8 @@ public class ClientHandler {
                     //ClientHandler.this.socket = null;
                     System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
+                    System.out.println(e);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -42,35 +43,21 @@ public class ClientHandler {
 
 
             Thread t1 = new Thread(() -> {
-
-                System.out.println("---debug--- ClientHandler Thread t1 START");
-
                 try {
-
-                    System.out.println("---debug--- ClientHandler Thread t1 START go try");
-
                     while (true) {
-
-                        sendMsg("Server: Check conection ___ 54");
-
-                        System.out.println("---debug--- ClientHandler Thread t1 START go try go while");
-
                         if (ClientHandler.this.socket.isClosed()) {
                             System.out.println("Client Handler is interrupted -> " + Thread.currentThread().isInterrupted());
                             Thread.currentThread().interrupt();
                             System.out.println("Client Handler is interrupted -> " + Thread.currentThread().isInterrupted());
                         }
-
-                        System.out.println("---debug--- ClientHandler Thread t1 START 63 String msg = in.readUTF();");
-
                         String msg = in.readUTF();
-
-                        System.out.println("---debug--- ClientHandler recive msg: " + msg);
-
                         if (msg.startsWith("/auth")) {
                             String[] data = msg.split("\\s");
                             if (data.length == 3) {
                                 String chatNick = server.getAuthService().authByLoginAndPassword(data[1], data[2]);
+
+                                System.out.println("--- debug --- 59 " + chatNick);
+
                                 if (chatNick != null) {
                                     if (!server.isNickBusy(chatNick)) {
                                         nick = chatNick;

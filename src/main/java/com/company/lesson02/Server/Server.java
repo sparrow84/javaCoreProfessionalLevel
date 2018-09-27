@@ -7,12 +7,13 @@ import java.util.Vector;
 
 public class Server {
     private Vector<ClientHandler> clients;
+//    private AuthService authService;
     private AuthService authService;
 
     public Server() {
         try (ServerSocket serverSocket = new ServerSocket(8189)) {
             clients = new Vector<>();
-            authService = new BaseAuthService();
+            authService = new DBAuthService();
 
             System.out.println("Server started... Waiting clients...");
 

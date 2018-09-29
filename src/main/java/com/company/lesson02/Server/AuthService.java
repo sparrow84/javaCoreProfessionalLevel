@@ -7,14 +7,3 @@ public interface AuthService {
 
     boolean deactivateUser(String nick);
 }
-
-
-
-
-
-//public class AuthService {
-//    public String getNickByLoginAndPass(String login, String pass) {
-//
-//        return "";
-//    }
-//}

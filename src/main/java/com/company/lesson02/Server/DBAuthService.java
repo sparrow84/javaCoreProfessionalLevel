@@ -25,21 +25,24 @@ public class DBAuthService implements AuthService {
     public void connect() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection(JDBC.PREFIX + classLoader.getResource("main.db"));
+        printAllNicks();
         statement = connection.createStatement();
+
+
     }
 
     @Override
     public String authByLoginAndPassword(String login, String pass) {
 
-        System.out.println("--- debug --- DBAuthService 22 ");
-
         String result = null;
-
         try {
 //            ResultSet rs = statement.executeQuery("SELECT nick FROM users WHERE login = '" + login + "' AND password = '" + pass + "';");
-            preparedStatement = connection.prepareStatement("SELECT nick FROM users WHERE login = '?' AND password = '?';");
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, pass);
+//            preparedStatement = connection.prepareStatement("SELECT nick FROM users WHERE login = '?' AND password = '?';");
+            preparedStatement = connection.prepareStatement("SELECT nick FROM users WHERE login = '111' AND password = '111';");
+//            preparedStatement.setString(1, login);
+//            preparedStatement.setString(1, "111");
+//            preparedStatement.setString(2, pass);
+//            preparedStatement.setString(2, "111");
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 result = rs.getString("nick");
@@ -50,6 +53,25 @@ public class DBAuthService implements AuthService {
         }
         return result;
     }
+
+
+    public void printAllNicks() {
+        try {
+            preparedStatement = connection.prepareStatement("SELECT nick FROM users;");
+            preparedStatement.executeQuery();
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            System.out.println("All nicks in user table:");
+            while (rs.next()) {
+                System.out.println("nick = " + rs.getString("nick"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void changeNick(String currentNick, String newNick) {
         try {

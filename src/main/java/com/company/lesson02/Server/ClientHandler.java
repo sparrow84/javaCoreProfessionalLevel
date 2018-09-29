@@ -54,6 +54,15 @@ public class ClientHandler {
                         if (msg.startsWith("/auth")) {
                             String[] data = msg.split("\\s");
                             if (data.length == 3) {
+
+// --- debug block CH59 start --------------------------------------------------------------
+                                System.out.println("--- debug block 12 start ---");
+                                for (int i = 0; i < data.length; i++) {
+                                    System.out.println("data[" + i + "] = " + data[i]);
+                                }
+                                System.out.println("--- debug block 12 end ---");
+// --- debug block CH59 end -----------------------------------------------------------------
+
                                 String chatNick = server.getAuthService().authByLoginAndPassword(data[1], data[2]);
 
                                 System.out.println("--- debug --- 59 " + chatNick);

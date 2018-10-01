@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class lesson01 {
+public class Lesson01 {
     public static void main(String[] args) {
         /**
          * 1 - 2 tasks

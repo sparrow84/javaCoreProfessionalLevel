@@ -38,7 +38,7 @@ public class LogMessages {
     }
 
     public void readMessege(int messagesCount) {
-
+        //FIXME
     }
 
     public void readMesseges(int messagesCount) {

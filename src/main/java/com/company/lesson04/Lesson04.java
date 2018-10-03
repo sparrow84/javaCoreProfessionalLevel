@@ -9,14 +9,20 @@ public class Lesson04 {
     public static void main(String[] args) {
         System.out.println("Start ...");
 
-
+        int count = 9;
 
         Thread t1 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < count; i++) {
                 System.out.print("A");
                 try {
-                    synchronized (monA) {
-                        monA.wait();
+                    synchronized (monB) {
+                        monB.notify();
+                    }
+
+                    if (i < count - 1) {
+                        synchronized (monA) {
+                            monA.wait();
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -25,11 +31,17 @@ public class Lesson04 {
         });
 
         Thread t2 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < count; i++) {
                 System.out.print("B");
                 try {
-                    synchronized (monB) {
-                        monB.wait();
+                    synchronized (monC) {
+                        monC.notify();
+                    }
+
+                    if (i < count - 1) {
+                        synchronized (monB) {
+                            monB.wait();
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -38,20 +50,18 @@ public class Lesson04 {
         });
 
         Thread t3 = new Thread(() -> {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < count; i++) {
                 System.out.print("C ");
                 try {
-
                     synchronized (monA) {
                         monA.notify();
                     }
 
-                    synchronized (monC) {
-                        monC.wait();
+                    if (i < count - 1) {
+                        synchronized (monC) {
+                            monC.wait();
+                        }
                     }
-
-
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -60,15 +70,16 @@ public class Lesson04 {
 
 /** /
         try {
-            synchronized (monA) {
-                monA.notify();
-            }
-            synchronized (monB) {
-                monB.wait();
-            }
-            synchronized (monC) {
-                monC.wait();
-            }
+//            synchronized (monA) {
+//                monA.notify();
+//            }
+//            synchronized (monB) {
+//                monB.wait(50);
+//            }
+//            synchronized (monC) {
+//                monC.wait(100);
+//            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

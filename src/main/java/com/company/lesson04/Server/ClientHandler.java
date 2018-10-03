@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
 
 import static java.lang.Thread.sleep;
 
@@ -21,25 +22,34 @@ public class ClientHandler {
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
 
+            ExecutorService executorService = null;
+
+            executorService.execute(qwe());
+
 //            out.writeUTF("ClientHandler --- TEST 24");
 
             // Поток отслеживает таймаут для отключения при простое во время логина
-            Thread t3 = new Thread(() -> {
-                try {
-                    sleep(120000);
-                    sendMsg("Server: Connection timed out_.");
-                    System.out.println("ClientHandler.this.socket before -> " + ClientHandler.this.socket);
-                    System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
-                    ClientHandler.this.socket.close();
-                    //ClientHandler.this.socket = null;
-                    System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
-                } catch (InterruptedException e) {
+            Thread t3 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(120000);
+                        ClientHandler.this.sendMsg("Server: Connection timed out_.");
+                        System.out.println("ClientHandler.this.socket before -> " + ClientHandler.this.socket);
+                        System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
+                        ClientHandler.this.socket.close();
+                        //ClientHandler.this.socket = null;
+                        System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
+                    } catch (InterruptedException e) {
 //                    e.printStackTrace();
-                    System.out.println(e);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        System.out.println(e);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
+
+            
 
 
             Thread t1 = new Thread(() -> {
@@ -124,6 +134,10 @@ public class ClientHandler {
         }
     }
 
+    private Runnable qwe() {
+        return null;
+    }
+
 
     public void sendMsg(String msg) {
         try {
@@ -139,14 +153,22 @@ public class ClientHandler {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
+//
+//    private Runnable qwe() {
+//        try {
+//            sleep(120000);
+//            ClientHandler.this.sendMsg("Server: Connection timed out_.");
+//            System.out.println("ClientHandler.this.socket before -> " + ClientHandler.this.socket);
+//            System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
+//            ClientHandler.this.socket.close();
+//            //ClientHandler.this.socket = null;
+//            System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
+//        } catch (InterruptedException e) {
+//    //                e.printStackTrace();
+//            System.out.println(e);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }

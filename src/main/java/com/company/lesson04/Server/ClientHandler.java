@@ -1,5 +1,7 @@
 package com.company.lesson04.Server;
 
+import com.company.lesson04.Client.Client;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,6 +31,9 @@ public class ClientHandler {
 //            out.writeUTF("ClientHandler --- TEST 24");
 
             // Поток отслеживает таймаут для отключения при простое во время логина
+
+//            T3 t3 = new T3(this);
+
             Thread t3 = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -48,6 +53,9 @@ public class ClientHandler {
                     }
                 }
             });
+
+
+
 
             
 
@@ -82,7 +90,8 @@ public class ClientHandler {
                                         nick = chatNick;
                                         sendMsg("/authok " + chatNick);
                                         server.subscribe(ClientHandler.this);
-                                        t3.interrupt();
+//                                        t3.interrupt();
+
                                         break;
                                     } else {
                                         sendMsg("The account is already taken");
@@ -121,13 +130,16 @@ public class ClientHandler {
 
             });
 
-            t3.start();
+
+//            t3.start();
+            executorService.execute(t3);
             try {
                 t1.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            t1.start();
+//            t1.start();
+            executorService.execute(t1);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -154,21 +166,29 @@ public class ClientHandler {
 }
 
 //
-//    private Runnable qwe() {
+//class T3 implements Runnable {
+//
+//    ClientHandler clientHandler;
+//
+//    T3 (ClientHandler clientHandler) {
+//        this.clientHandler = clientHandler;
+//    }
+//
+//    @Override
+//    public void run() {
 //        try {
 //            sleep(120000);
-//            ClientHandler.this.sendMsg("Server: Connection timed out_.");
-//            System.out.println("ClientHandler.this.socket before -> " + ClientHandler.this.socket);
-//            System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
-//            ClientHandler.this.socket.close();
+//            clientHandler.sendMsg("Server: Connection timed out_.");
+//            System.out.println("ClientHandler.this.socket before -> " + clientHandler.socket);
+//            System.out.println("Socket is closed -> " + clientHandler.socket.isClosed());
+//            clientHandler.socket.close();
 //            //ClientHandler.this.socket = null;
-//            System.out.println("Socket is closed -> " + ClientHandler.this.socket.isClosed());
+//            System.out.println("Socket is closed -> " + clientHandler.socket.isClosed());
 //        } catch (InterruptedException e) {
-//    //                e.printStackTrace();
+////                    e.printStackTrace();
 //            System.out.println(e);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//
-//        return null;
 //    }
+//}

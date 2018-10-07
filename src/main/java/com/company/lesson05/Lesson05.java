@@ -13,9 +13,9 @@ public class Lesson05 {
 
         CyclicBarrier allCarsRady = new CyclicBarrier(CARS_COUNT);
 
-        Lock raceStart = new ReentrantLock();
+        final CountDownLatch raceStart = new CountDownLatch(CARS_COUNT);
 
-        final CountDownLatch raceEnd = new CountDownLatch(CARS_COUNT);
+        final CountDownLatch raceEnd   = new CountDownLatch(CARS_COUNT);
 
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
 
@@ -34,21 +34,21 @@ public class Lesson05 {
         }
 
         new Thread(() -> {
-            raceStart.lock();
+            try {
+                raceStart.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
-//            raceStart.unlock();
         }).start();
 
         new Thread(() -> {
-
             try {
                 raceEnd.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
-
         }).start();
 
 

@@ -8,7 +8,7 @@ public class Car implements Runnable {
 
     CyclicBarrier cyclicbarrier;
     CountDownLatch raceEnd;
-    Lock raceStart;
+    CountDownLatch raceStart;
 
     private static int CARS_COUNT;
     static {
@@ -24,7 +24,7 @@ public class Car implements Runnable {
         return speed;
     }
 
-    public Car(Race race, int speed, CyclicBarrier cyclicbarrier, CountDownLatch raceEnd, Lock raceStart) {
+    public Car(Race race, int speed, CyclicBarrier cyclicbarrier, CountDownLatch raceEnd, CountDownLatch raceStart) {
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;
@@ -37,9 +37,6 @@ public class Car implements Runnable {
     @Override
     public void run() {
 
-
-        raceStart.tryLock();
-
         try {
             System.out.println(this.name + " готовится");
             Thread.sleep(500 + (int)(Math.random() * 800));
@@ -47,12 +44,9 @@ public class Car implements Runnable {
 
             cyclicbarrier.await();
 
-            try {
-                raceStart.unlock();
-            } catch (IllegalMonitorStateException e) {
-            }
+            raceStart.countDown();
 
-
+            Thread.sleep(1);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,9 +56,6 @@ public class Car implements Runnable {
             race.getStages().get(i).go(this);
         }
 
-        //FIXME
-
         raceEnd.countDown();
-
     }
 }

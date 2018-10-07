@@ -1,6 +1,12 @@
 package com.company.lesson05;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
 public class Car implements Runnable {
+
+    CyclicBarrier cyclicbarrier;
+
     private static int CARS_COUNT;
     static {
         CARS_COUNT = 0;
@@ -14,18 +20,25 @@ public class Car implements Runnable {
     public int getSpeed() {
         return speed;
     }
-    public Car(Race race, int speed) {
+
+    public Car(Race race, int speed, CyclicBarrier cyclicbarrier) {
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;
         this.name = "Участник #" + CARS_COUNT;
+        this.cyclicbarrier = cyclicbarrier;
     }
+
     @Override
     public void run() {
+
         try {
             System.out.println(this.name + " готовится");
             Thread.sleep(500 + (int)(Math.random() * 800));
             System.out.println(this.name + " готов");
+
+            cyclicbarrier.await();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

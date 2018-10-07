@@ -2,6 +2,9 @@ package com.company.lesson05;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Lesson05 {
 
@@ -9,7 +12,10 @@ public class Lesson05 {
 
     public static void main(String[] args) {
 
-        CyclicBarrier cb = new CyclicBarrier(CARS_COUNT + 1);
+        CyclicBarrier allCarsRady = new CyclicBarrier(CARS_COUNT);
+
+        Lock raceEnd = new ReentrantLock();
+        Lock raceStart = new ReentrantLock();
 
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
 
@@ -18,26 +24,28 @@ public class Lesson05 {
         Car[] cars = new Car[CARS_COUNT];
 
         for (int i = 0; i < cars.length; i++) {
-            cars[i] = new Car(race, 20 + (int) (Math.random() * 10), cb);
+            cars[i] = new Car(race, 20 + (int) (Math.random() * 10), allCarsRady ,raceEnd, raceStart);
         }
 
-        new Thread(() -> {
-            try {
-                cb.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (BrokenBarrierException e) {
-                e.printStackTrace();
-            }
-            System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
-        }).start();
+
 
         for (int i = 0; i < cars.length; i++) {
             new Thread(cars[i]).start();
         }
 
+        new Thread(() -> {
+            raceStart.lock();
+            System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
+//            raceStart.unlock();
+        }).start();
 
-//        System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
+        new Thread(() -> {
+            raceEnd.lock();
+            System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
+//            raceEnd.unlock();
+        }).start();
+
+
     }
 }
 

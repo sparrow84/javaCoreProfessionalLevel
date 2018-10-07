@@ -1,14 +1,13 @@
 package com.company.lesson05;
 
-import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 
 public class Car implements Runnable {
 
     CyclicBarrier cyclicbarrier;
-    Lock raceEnd;
+    CountDownLatch raceEnd;
     Lock raceStart;
 
     private static int CARS_COUNT;
@@ -25,7 +24,7 @@ public class Car implements Runnable {
         return speed;
     }
 
-    public Car(Race race, int speed, CyclicBarrier cyclicbarrier, Lock raceEnd, Lock raceStart) {
+    public Car(Race race, int speed, CyclicBarrier cyclicbarrier, CountDownLatch raceEnd, Lock raceStart) {
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;
@@ -38,7 +37,7 @@ public class Car implements Runnable {
     @Override
     public void run() {
 
-        raceEnd.tryLock();
+
         raceStart.tryLock();
 
         try {
@@ -65,10 +64,7 @@ public class Car implements Runnable {
 
         //FIXME
 
-        try {
-            raceEnd.unlock();
-        } catch (IllegalMonitorStateException e) {
-        }
+        raceEnd.countDown();
 
     }
 }

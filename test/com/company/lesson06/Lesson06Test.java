@@ -36,4 +36,32 @@ class Lesson06Test {
         assertThrows(ArrayIsNotInitialized.class, () -> {lesson06.afterLastFour(arr);});
     }
 
+    @Test
+    void atLeastOneFourAndOne001() {
+        Lesson06 lesson06 = new Lesson06();
+        int[] arr = {1,1,1,1,1};
+        assertFalse(lesson06.atLeastOneFourAndOne(arr));
+    }
+
+    @Test
+    void atLeastOneFourAndOne002() {
+        Lesson06 lesson06 = new Lesson06();
+        int[] arr = {4,4,4,4,4};
+        assertFalse(lesson06.atLeastOneFourAndOne(arr));
+    }
+
+    @Test
+    void atLeastOneFourAndOne003() {
+        Lesson06 lesson06 = new Lesson06();
+        int[] arr = {1,4,4,4,4};
+        assertTrue(lesson06.atLeastOneFourAndOne(arr));
+    }
+
+    @Test
+    void atLeastOneFourAndOne004() {
+        Lesson06 lesson06 = new Lesson06();
+        int[] arr = {4,1,1,1,1};
+        assertTrue(lesson06.atLeastOneFourAndOne(arr));
+    }
+
 }

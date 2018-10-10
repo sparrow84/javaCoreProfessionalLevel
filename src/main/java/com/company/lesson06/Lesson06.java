@@ -13,6 +13,11 @@ public class Lesson06 {
 
         System.out.println(Arrays.toString(afterLastFour(arr)));
 
+        //-------------------------------------------------------
+
+        int[] arr1 = {4,1,4};
+
+        System.out.println("atLeastOneFourAndOne - " + atLeastOneFourAndOne(arr1));
     }
 
     public static int[] afterLastFour(int[] arr) {
@@ -63,7 +68,21 @@ public class Lesson06 {
         return res;
     }
 
-
+    public static boolean atLeastOneFourAndOne(int[] arr) {
+        boolean res = false;
+        int[] requiredNumbers = {1,4};
+        for (int i = 0; i < requiredNumbers.length; i++) {
+            res = false;
+            for (int j = 0; j < arr.length; j++) {
+                if (requiredNumbers[i] == arr[j]) {
+                    res = true;
+                    break;
+                }
+            }
+            if (!res) break;
+        }
+        return res;
+    }
 }
 
 class ArrayEmptyEception extends Throwable {

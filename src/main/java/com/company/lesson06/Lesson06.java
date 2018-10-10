@@ -62,6 +62,8 @@ public class Lesson06 {
         }
         return res;
     }
+
+
 }
 
 class ArrayEmptyEception extends Throwable {

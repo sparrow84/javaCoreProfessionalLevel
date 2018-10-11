@@ -1,9 +1,14 @@
 package com.company.lesson06;
 
-import java.util.ArrayList;
+import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 
+@Data
 public class Lesson06 {
+
+    private static final Logger log = LoggerFactory.getILoggerFactory(Lesson06.class);
 
     public static void main(String[] args) {
 
@@ -32,6 +37,7 @@ public class Lesson06 {
             try {
                 throw new ArrayIsNotInitialized();
             } catch (ArrayIsNotInitialized arrayIsNotInitialized) {
+                log.error("ArrayIsNotInitialized");
             }
         } else {
             if (arr.length > 0) {
@@ -54,6 +60,7 @@ public class Lesson06 {
                     try {
                         throw new Number4IsNotFound();
                     } catch (Number4IsNotFound number4IsNotFound) {
+                        log.error("Number4IsNotFound");
                     }
                 }
 
@@ -62,6 +69,7 @@ public class Lesson06 {
                 try {
                     throw new ArrayEmptyEception();
                 } catch (ArrayEmptyEception arrayEmptyEception) {
+                    log.error("ArrayEmptyEception");
                 }
             }
         }

@@ -8,7 +8,7 @@ import java.util.Arrays;
 @Data
 public class Lesson06 {
 
-    private static final Logger log = LoggerFactory.getILoggerFactory(Lesson06.class);
+    private static final Logger log = LoggerFactory.getLogger(Lesson06.class);
 
     public static void main(String[] args) {
 

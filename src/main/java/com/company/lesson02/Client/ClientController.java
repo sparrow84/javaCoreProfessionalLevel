@@ -21,6 +21,7 @@ public class ClientController implements Controller {
         initConnection();
         ui = new Client(this);
         this.showUI(ui);
+        LogMessages logMessages = new LogMessages();
     }
 
     public void showUI(ClientUI ui) {

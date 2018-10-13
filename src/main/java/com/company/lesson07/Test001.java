@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class Test001 {
 
-    @Retention(RetentionPolicy.RUNTIME)
+
     @BeforeSuite
     public static void test01(){
         //

@@ -6,7 +6,7 @@ public class Test001 {
     @BeforeSuite
     public static void test01(){
         //
-        System.out.println("Test001.test01");
+
     }
 
     @Test

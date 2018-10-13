@@ -1,8 +1,5 @@
 package com.company.lesson07;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 public class Test001 {
 
 

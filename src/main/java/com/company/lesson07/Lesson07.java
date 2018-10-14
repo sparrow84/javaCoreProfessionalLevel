@@ -22,33 +22,32 @@ public class Lesson07 {
         }
 
         if (meth != null) {
-            meth.invoke(null);
             System.out.println(meth.getName());
+            meth.invoke(null);
             meth = null;
         }
 
 
-        List<Method> methodList = new ArrayList<>();
+        List<Method> testMethodList = new ArrayList<>();
 
         for (Method method : methods) {
             if (method.isAnnotationPresent(Test.class)) {
-                methodList.add(method);
+                testMethodList.add(method);
             }
         }
 
         Method tmpMethod;
 
         for (boolean basta = false;; basta = false) {
+            for (int i = 0; i < testMethodList.size() - 1; i++) {
 
-            for (int i = 0; i < methodList.size() - 1; i++) {
-
-                int priority1 = methodList.get(i).getAnnotation(Test.class).priority();
-                int priority2 = methodList.get(i + 1).getAnnotation(Test.class).priority();
+                int priority1 = testMethodList.get(i).getAnnotation(Test.class).priority();
+                int priority2 = testMethodList.get(i + 1).getAnnotation(Test.class).priority();
 
                 if (priority1 < priority2) {
-                    tmpMethod = methodList.get(i);
-                    methodList.set(i, methodList.get(i+1));
-                    methodList.set(i+1, tmpMethod);
+                    tmpMethod = testMethodList.get(i);
+                    testMethodList.set(i, testMethodList.get(i+1));
+                    testMethodList.set(i+1, tmpMethod);
                     basta = true;
                 }
             }
@@ -56,17 +55,10 @@ public class Lesson07 {
             if (!basta) break;
         }
 
-        for (Method m: methodList) {
+        for (Method m: testMethodList) {
             System.out.println(m.getName());
             m.invoke(null);
         }
-
-
-
-
-
-
-
 
 
         for (Method method : methods) {

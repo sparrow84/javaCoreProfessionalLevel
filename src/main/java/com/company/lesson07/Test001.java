@@ -15,6 +15,12 @@ public class Test001 {
         System.out.println("Test001.test02");
     }
 
+    @Test(priority=8)
+    public static void test05(){
+        //
+        System.out.println("Test001.test02");
+    }
+
     @Test
     public static void test04(){
         //

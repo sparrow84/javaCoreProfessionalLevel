@@ -6,13 +6,14 @@ public class ClassForUseTests {
 
         Lesson07 lesson07 = new Lesson07();
 
-        //lesson07.start();
+//        lesson07.start();
 
         sample();
     }
 
     @Test
     public static void sample() {
+        //
         System.out.println("Test");
     }
 }
